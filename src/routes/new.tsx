@@ -46,7 +46,6 @@ export default function New() {
           </button>
         </form>
       </div>
-      {JSON.stringify(projects)}
     </main>
   );
 }
