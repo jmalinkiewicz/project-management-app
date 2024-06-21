@@ -2,15 +2,50 @@ import { AnimatePresence, motion } from "framer-motion";
 import FolderIcon from "../icons/folder";
 import SettingsIcon from "../icons/settings";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useProjects } from "../../state/projects";
 
-export default function Nav() {
+type Props = {
+  id: string;
+};
+
+export default function Nav({ id }: Props) {
+  const project = useProjects((state) =>
+    state.projects.find((p) => p.id === id),
+  );
+  if (!project) {
+    return;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
+  const { deleteProject } = useProjects();
+  const navigate = useNavigate();
+
+  function handleDelete() {
+    deleteProject(id);
+    navigate("/");
+  }
 
   return (
     <nav className="border-b-[1px] border-gray-400 p-4">
       <div className="mx-auto flex max-w-screen-xl items-center justify-between">
         <div className="flex items-center gap-4">
-          <FolderIcon />
+          <Link to="/">
+            <motion.div
+              initial={{
+                backgroundColor: "#ffffff",
+              }}
+              className="rounded-full p-1.5"
+              whileHover={{
+                backgroundColor: "#f5f5f5",
+              }}
+              whileTap={{
+                scale: 0.9,
+              }}
+            >
+              <FolderIcon />
+            </motion.div>
+          </Link>
           <motion.input
             whileHover={{
               backgroundColor: "#f5f5f5",
@@ -21,6 +56,7 @@ export default function Nav() {
             className="w-[450px] min-w-48 py-0.5 text-2xl font-bold focus:outline-none"
             type="text"
             spellCheck={false}
+            value={project.name}
           />
         </div>
         <div className="relative flex items-center justify-center">
@@ -56,12 +92,18 @@ export default function Nav() {
                 }}
                 className="absolute top-10 flex w-36 flex-col rounded bg-white p-1 shadow-md"
               >
-                <button className="h-10 w-full rounded pl-2 text-left hover:bg-red-100">
+                <button
+                  onClick={handleDelete}
+                  className="h-10 w-full rounded pl-2 text-left hover:bg-red-100"
+                >
                   Delete
                 </button>
-                <button className="h-10 w-full rounded pl-2 text-left hover:bg-blue-100">
+                <Link
+                  to="/new"
+                  className="flex h-10 w-full items-center justify-start rounded pl-2 text-left hover:bg-blue-100"
+                >
                   New Project
-                </button>
+                </Link>
                 <button className="h-10 w-full rounded pl-2 text-left hover:bg-slate-100">
                   GitHub
                 </button>

@@ -6,10 +6,14 @@ export default function New() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  const { addProject, projects } = useProjects();
+  const { addProject } = useProjects();
 
   function handleCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!name) {
+      return;
+    }
 
     addProject({
       name,

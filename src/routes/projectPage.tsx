@@ -16,11 +16,9 @@ export default function ProjectPage() {
     }
   }, []);
 
-  const id = params.id;
-
   return (
     <div className="h-screen w-screen">
-      <Nav />
+      <Nav id={String(params.id)} />
     </div>
   );
 }
