@@ -9,6 +9,7 @@ interface Project {
     inProgress: string[];
     done: string[];
   };
+  slug: string;
 }
 
 interface ProjectsState {
@@ -30,6 +31,7 @@ export const useProjects = create<ProjectsState>()(
             inProgress: ["Task 3"],
             done: ["Task 4"],
           },
+          slug: "project-1",
         },
       ],
       addProject: (project) =>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useProjects } from "../state/projects";
 import { useNavigate } from "react-router-dom";
+import { createSlug } from "../helpers";
 
 export default function New() {
   const [name, setName] = useState("");
@@ -10,6 +11,8 @@ export default function New() {
 
   function handleCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const slug = createSlug(name);
 
     if (!name) {
       return;
@@ -23,9 +26,10 @@ export default function New() {
         inProgress: [],
         done: [],
       },
+      slug,
     });
 
-    navigate("/projects/" + name.toLowerCase());
+    navigate("/projects/" + slug);
   }
 
   return (

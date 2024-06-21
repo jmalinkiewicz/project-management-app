@@ -7,7 +7,7 @@ export default function ProjectPage() {
   const navigate = useNavigate();
   const params = useParams();
   const project = useProjects((state) =>
-    state.projects.find((p) => p.id === params.id),
+    state.projects.find((p) => p.slug === params.slug),
   );
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function ProjectPage() {
 
   return (
     <div className="h-screen w-screen">
-      <Nav id={String(params.id)} />
+      <Nav id={String(project?.id)} />
     </div>
   );
 }

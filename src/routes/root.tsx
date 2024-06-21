@@ -17,7 +17,7 @@ export default function Root() {
             {projects.map((project) => (
               <li key={project.id}>
                 <Link
-                  to={`/projects/${project.id}`}
+                  to={`/projects/${project.slug}`}
                   className="text-xl text-blue-500 hover:underline"
                 >
                   {project.name}
