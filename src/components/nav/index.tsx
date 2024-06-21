@@ -119,12 +119,17 @@ export default function Nav({ id }: Props) {
                 <Link
                   to="/new"
                   className="flex h-10 w-full items-center justify-start rounded pl-2 text-left hover:bg-blue-100"
+                  target="_blank"
                 >
                   New Project
                 </Link>
-                <button className="h-10 w-full rounded pl-2 text-left hover:bg-slate-100">
+                <a
+                  href="https://github.com/jmalinkiewicz/project-management-app"
+                  className="flex h-10 w-full items-center justify-start rounded pl-2 text-left hover:bg-slate-100"
+                  target="_blank"
+                >
                   GitHub
-                </button>
+                </a>
               </motion.div>
             )}
           </AnimatePresence>
