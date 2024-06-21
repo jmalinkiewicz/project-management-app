@@ -13,17 +13,34 @@ export default function Nav({ id }: Props) {
   const project = useProjects((state) =>
     state.projects.find((p) => p.id === id),
   );
-  if (!project) {
-    return;
+  if (!project || project === undefined) {
+    return null;
   }
 
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteProject } = useProjects();
+  const { deleteProject, updateProject } = useProjects();
   const navigate = useNavigate();
 
   function handleDelete() {
     deleteProject(id);
     navigate("/");
+  }
+
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (project === undefined) {
+      return;
+    }
+
+    updateProject(id, {
+      name: event.target.value,
+      id: project.id,
+      lists: {
+        toDo: project.lists.toDo,
+        inProgress: project.lists.inProgress,
+        done: project.lists.done,
+      },
+      slug: project.slug,
+    });
   }
 
   return (
@@ -47,6 +64,7 @@ export default function Nav({ id }: Props) {
             </motion.div>
           </Link>
           <motion.input
+            onChange={handleNameChange}
             whileHover={{
               backgroundColor: "#f5f5f5",
             }}
