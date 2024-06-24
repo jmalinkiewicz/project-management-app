@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface Project {
+export interface Project {
   name: string;
   id: string;
   lists: {
