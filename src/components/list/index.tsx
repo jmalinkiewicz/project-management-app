@@ -25,7 +25,7 @@ export default function List({ id, type }: Props) {
   const [isCreating, setIsCreating] = useState(false);
   const { updateProject } = useProjects();
 
-  function handleCreateTask(e: any) {
+  function handleCreateTask(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     if (!isCreating) {
