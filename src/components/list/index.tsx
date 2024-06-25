@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Project, useProjects } from "../../state/projects";
 import XMarkIcon from "../icons/xmark";
+import PlusIcon from "../icons/plus";
 
 type Props = {
   id: string;
@@ -111,9 +112,12 @@ export default function List({ id, type }: Props) {
         )}
         <button
           onClick={handleCreateTask}
-          className="w-full rounded bg-blue-500 p-1.5 font-bold text-white hover:bg-blue-600"
+          className="flex w-full gap-3 rounded p-1.5 font-semibold text-gray-500 hover:bg-gray-300 hover:text-gray-700"
         >
-          Create Task
+          <span>
+            <PlusIcon />
+          </span>
+          <span>Create Task</span>
         </button>
       </form>
     </div>
