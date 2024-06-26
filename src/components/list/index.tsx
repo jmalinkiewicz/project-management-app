@@ -86,8 +86,8 @@ export default function List({ id, type }: Props) {
   }
 
   return (
-    <div className="flex w-72 min-w-72 flex-col gap-4 rounded bg-slate-200 p-2">
-      <h2>{label}</h2>
+    <div className="flex w-72 min-w-72 flex-col gap-4 rounded border-2 border-black/10 bg-slate-200 p-2">
+      <h2 className="text-xl font-semibold">{label}</h2>
       <div className="flex flex-col gap-2">
         {tasks?.map((task) => (
           <div
