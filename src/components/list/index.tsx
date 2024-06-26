@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Project, useProjects } from "../../state/projects";
+import { Project, Task, useProjects } from "../../state/projects";
 import XMarkIcon from "../icons/xmark";
 import PlusIcon from "../icons/plus";
+import { createId } from "@paralleldrive/cuid2";
 
 type Props = {
   id: string;
@@ -13,7 +14,8 @@ export default function List({ id, type }: Props) {
     state.projects.find((p) => p.id === id),
   );
 
-  const list = project?.lists[type];
+  const taskIDs = project?.lists[type];
+  const tasks = taskIDs?.map((id) => project?.tasks.find((t) => t.id === id));
 
   const label = {
     toDo: "To Do",
@@ -42,12 +44,18 @@ export default function List({ id, type }: Props) {
       return;
     }
 
+    const task: Task = {
+      name,
+      id: createId(),
+    };
+
     const updatedProject: Project = {
       ...project,
       lists: {
         ...project.lists,
-        [type]: [...project.lists[type], name],
+        [type]: [...project.lists[type], task.id],
       },
+      tasks: [...project.tasks, task],
     };
 
     updateProject(id, updatedProject);
@@ -71,6 +79,7 @@ export default function List({ id, type }: Props) {
         ...project.lists,
         [type]: project.lists[type].filter((t) => t !== task),
       },
+      tasks: project.tasks.filter((t) => t.id !== task),
     };
 
     updateProject(id, updatedProject);
@@ -80,15 +89,15 @@ export default function List({ id, type }: Props) {
     <div className="flex w-72 min-w-72 flex-col gap-4 rounded bg-slate-200 p-2">
       <h2>{label}</h2>
       <div className="flex flex-col gap-2">
-        {list?.map((task) => (
+        {tasks?.map((task) => (
           <div
-            key={task}
+            key={task?.id}
             className="flex justify-between hyphens-auto rounded bg-gray-100 p-2 shadow"
           >
-            <span>{task}</span>
+            <span>{task?.name}</span>
             <button
               onClick={() => {
-                handleDeleteTask(task);
+                handleDeleteTask(task?.id || "");
               }}
               className="rounded hover:bg-gray-200"
             >
