@@ -8,21 +8,26 @@ import Root from "./routes/root.tsx";
 import ProjectPage from "./routes/projectPage.tsx";
 import New from "./routes/new.tsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/projects/:slug",
+      element: <ProjectPage />,
+    },
+    {
+      path: "/new",
+      element: <New />,
+    },
+  ],
   {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
+    basename: "/project-management-app",
   },
-  {
-    path: "/projects/:slug",
-    element: <ProjectPage />,
-  },
-  {
-    path: "/new",
-    element: <New />,
-  },
-]);
+);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
