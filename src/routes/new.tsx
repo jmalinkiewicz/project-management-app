@@ -27,6 +27,7 @@ export default function New() {
         done: [],
       },
       slug,
+      tasks: [],
     });
 
     navigate("/projects/" + slug);

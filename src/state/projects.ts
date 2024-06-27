@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export type ListKey = "toDo" | "inProgress" | "done";
+
 export interface Project {
   name: string;
   id: string;

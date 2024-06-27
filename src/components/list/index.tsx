@@ -3,6 +3,8 @@ import { Project, Task, useProjects } from "../../state/projects";
 import XMarkIcon from "../icons/xmark";
 import PlusIcon from "../icons/plus";
 import { createId } from "@paralleldrive/cuid2";
+import TaskCard from "../task";
+import { useDroppable } from "@dnd-kit/core";
 
 type Props = {
   id: string;
@@ -26,6 +28,11 @@ export default function List({ id, type }: Props) {
   const [name, setName] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const { updateProject } = useProjects();
+  const { isOver, setNodeRef } = useDroppable({
+    id: type,
+  });
+
+  const style = isOver ? "bg-slate-300 pb-8" : "";
 
   function handleCreateTask(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -88,23 +95,17 @@ export default function List({ id, type }: Props) {
   return (
     <div className="flex w-72 min-w-72 flex-col gap-4 rounded border-2 border-black/10 bg-slate-200 p-2">
       <h2 className="text-xl font-semibold">{label}</h2>
-      <div className="flex flex-col gap-2">
+      <div ref={setNodeRef} className={`flex flex-col gap-2 rounded ${style}`}>
         {tasks?.map((task) => (
-          <div
+          <TaskCard
             key={task?.id}
-            className="flex justify-between hyphens-auto rounded bg-gray-100 p-2 shadow"
-          >
-            <span>{task?.name}</span>
-            <button
-              onClick={() => {
-                handleDeleteTask(task?.id || "");
-              }}
-              className="rounded hover:bg-gray-200"
-            >
-              <XMarkIcon />
-            </button>
-          </div>
+            task={task}
+            handleDeleteTask={handleDeleteTask}
+          />
         ))}
+        {tasks?.length === 0 && (
+          <h3 className="py-2 text-black/50">No tasks</h3>
+        )}
       </div>
       <form className="flex flex-col gap-2">
         {isCreating && (
