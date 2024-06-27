@@ -40,6 +40,7 @@ export default function Nav({ id }: Props) {
         done: project.lists.done,
       },
       slug: project.slug,
+      tasks: project.tasks,
     });
   }
 

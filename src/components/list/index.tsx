@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Project, Task, useProjects } from "../../state/projects";
-import XMarkIcon from "../icons/xmark";
 import PlusIcon from "../icons/plus";
 import { createId } from "@paralleldrive/cuid2";
 import TaskCard from "../task";
