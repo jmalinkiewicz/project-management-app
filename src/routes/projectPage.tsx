@@ -3,7 +3,12 @@ import Nav from "../components/nav";
 import { ListKey, Project, useProjects } from "../state/projects";
 import { useEffect } from "react";
 import List from "../components/list";
-import { DndContext } from "@dnd-kit/core";
+import {
+  DndContext,
+  useSensors,
+  useSensor,
+  PointerSensor,
+} from "@dnd-kit/core";
 
 export default function ProjectPage() {
   const navigate = useNavigate();
@@ -11,6 +16,14 @@ export default function ProjectPage() {
   const project: Project | undefined = useProjects((state) =>
     state.projects.find((p) => p.slug === params.slug),
   ) as Project;
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
 
   const { updateProject } = useProjects();
 
@@ -67,7 +80,7 @@ export default function ProjectPage() {
     <div className="h-screen w-screen overflow-hidden">
       <Nav id={String(project?.id)} />
       <div className="flex h-full w-full flex-nowrap items-start gap-8 overflow-x-auto overflow-y-scroll p-4">
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <List id={String(project?.id)} type="toDo" />
           <List id={String(project?.id)} type="inProgress" />
           <List id={String(project?.id)} type="done" />
